@@ -32,8 +32,8 @@ public class MySqlDAO implements HistoryService {
                     .estado(historyDTO.getEstado())
                     .fecha_localizacion(historyDTO.getFecha_localizacion())
                     .build();
-            historyMySQLRepository.save(objMysql);
-            historyDTO.setId(objMysql.getId());
+            HistoryMySQL objNewMysql = historyMySQLRepository.save(objMysql);
+            historyDTO.setId(objNewMysql.getId());
             return historyDTO;
         }catch (Exception e){
             System.out.println("Occurrio un error al crear el regisro en HistoryMYSQL "+e.getMessage());

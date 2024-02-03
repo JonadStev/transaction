@@ -33,8 +33,8 @@ public class PostgresDAO implements HistoryService {
                     .estado(historyDTO.getEstado())
                     .fecha_localizacion(historyDTO.getFecha_localizacion())
                     .build();
-            historyPostgreSQLRepository.save(objPostgreSql);
-            historyDTO.setId(objPostgreSql.getId());
+            HistoryPostgreSQL objNewPostgreSql = historyPostgreSQLRepository.save(objPostgreSql);
+            historyDTO.setId(objNewPostgreSql.getId());
             return historyDTO;
         }catch (Exception e){
             System.out.println("Occurrio un error al crear el regisro en HistoryPostgreSQL "+e.getMessage());
