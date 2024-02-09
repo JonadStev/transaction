@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  web-app:
+    container_name: web-app
+    image: appweb
+    ports:
+      - "80:80"
+    depends_on:
+      - java_app
+  java_app:
+    container_name: java_app
+    image: pee-java_app:1.0.0
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_POSTGRES_URL=jdbc:postgresql://db_postgres:5432/history
+      - DATABASE_POSTGRES_USER=postgres
+      - DATABASE_POSTGRES_PASSWORD=1234
+      - DATABASE_MYSQL_URL=jdbc:mysql://db_mysql:3306/history
+      - DATABASE_MYSQL_USER=root
+      - DATABASE_MYSQL_PASSWORD=1234
+    depends_on:
+      - db_postgres
+      - db_mysql
+  db_postgres:
+    container_name: db_postgres
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: history
+  db_mysql:
+    container_name: db_mysql
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: history
